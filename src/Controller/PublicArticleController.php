@@ -56,11 +56,17 @@ final class PublicArticleController extends AbstractController
         ]);
     }
 */
-    #[Route('/{id}', name: 'public_article_show', methods: ['GET'])]
-    public function show(Article $article): Response
+    #[Route('/{id}/{slug}', name: 'public_article_show', methods: ['GET'])]
+    public function show(Article $article, EntityManagerInterface $em): Response
     {
+        $sections = $em->getRepository(Section::class)->findAll();
+        $sectionCount = $em->getRepository(Section::class)->getArticleCountPerSection();
+        $authors = $em->getRepository(Article::class)->getAuthors($em);
         return $this->render('public_article/show.html.twig', [
             'article' => $article,
+            'sections' => $sections,
+            'sectionCount' => $sectionCount,
+            'authors' => $authors,
         ]);
     }
 /*

@@ -77,7 +77,7 @@ class AppFixtures extends Fixture
         $super->setUniqid(uniqid('user_', true));
         $super->setEmail("lee@leerlandais.com");
         $super->setActivate(true);
-        $super->setImgLoc("../assets/img/lee.jpg");
+        $super->setImgLoc("images/lee.jpg");
         $super->setQuote("Eat, Code, Sleep, Repeat");
 
         $this->admins[] = $super;
@@ -91,7 +91,7 @@ class AppFixtures extends Fixture
         $super->setUniqid(uniqid('user_', true));
         $super->setEmail("michael.pitz@cf2m.be");
         $super->setActivate(true);
-        $super->setImgLoc("../assets/img/mjp.jpg");
+        $super->setImgLoc("images/mjp.jpg");
         $super->setQuote("En Gelbique");
 
         $this->admins[] = $super;

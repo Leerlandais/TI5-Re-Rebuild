@@ -142,7 +142,7 @@
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-lg-8  mb-5 mb-lg-0">
-                    <h2 class="h5 section-title">Recent Post</h2>
+                    <h2 class="h5 section-title">Recent Posts</h2>
 
                     {% for article in pagination.items %}
                         <article class="card mb-4">
@@ -167,8 +167,9 @@
                                     </li>
                                     <li class="list-inline-item">
                                         <ul class="card-meta-tag list-inline">
-                                            <li class="list-inline-item"><a href="#">Demo</a></li>
-                                            <li class="list-inline-item"><a href="#">Elements</a></li>
+                                            {% for section in article.sections %}
+                                            <li class="list-inline-item"><a href="#">{{ section.sectionTitle }}</a></li>
+                                            {% endfor %}
                                         </ul>
                                     </li>
                                 </ul>
@@ -177,7 +178,7 @@
                                 {% set truncatedWords = truncateText|split(' ')|slice(0, lastSpace)|join(' ') %}
                                 {% set finalText = truncatedWords ~ '...' %}
                                 <p>{{ finalText }}</p>
-                                <a href="post-elements.html" class="btn btn-outline-primary">Read More</a>
+                                <a href="{{ path('public_article_show', {id: article.id, slug: article.titleSlug}) }}" class="btn btn-outline-primary">Read More</a>
                             </div>
                         </article>
                     {% endfor %}
@@ -203,7 +204,7 @@
                     <div class="widget widget-about">
                         <h4 class="widget-title">Hi, I'm Lee!</h4>
                         <img class="img-fluid" src="{{ asset('images/lee.jpg') }}" alt="Themefisher">
-                        <p>Eat, Code, Sleep, Repeat</p>
+                        <p>Eat, Sleep, Code, Repeat</p>
                         <ul class="list-inline social-icons mb-3">
 
                             <li class="list-inline-item"><a href="#"><i class="ti-facebook"></i></a></li>
