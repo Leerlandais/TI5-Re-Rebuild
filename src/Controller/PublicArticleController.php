@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Article;
 use App\Entity\Section;
+use App\Entity\User;
 use App\Repository\ArticleRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
@@ -35,6 +36,37 @@ final class PublicArticleController extends AbstractController
             'authors' => $authors,
         ]);
     }
+
+    #[Route('/{id}/{slug}', name: 'public_article_show', requirements: ['id' => '\d+', 'slug' => '.+'], methods: ['GET'])]
+    public function show(Article $article, EntityManagerInterface $em): Response
+    {
+        $sections = $em->getRepository(Section::class)->findAll();
+        $sectionCount = $em->getRepository(Section::class)->getArticleCountPerSection();
+        $authors = $this->articleRepository->getAuthors($em);
+        return $this->render('public_article/show.html.twig', [
+            'article' => $article,
+            'sections' => $sections,
+            'sectionCount' => $sectionCount,
+            'authors' => $authors,
+        ]);
+    }
+
+    #[Route('/author/{id}', name: 'public_article_author', requirements: ['id' => '\d+'], methods: ['GET'])]
+    public function author(EntityManagerInterface $em, int $id): Response
+    {
+
+        $author = $em->getRepository(User::class)->findBy(['id' => $id]);
+        $authorId = $author[0]->getId();
+
+        $authorArts = $this->articleRepository->getArticlesByAuthor($em, $authorId);
+
+        return $this->render('public_article/author.html.twig', [
+            'authorArts' => $authorArts,
+        ]);
+
+    }
+
+
 /*
     #[Route('/new', name: 'app_public_article_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
@@ -56,19 +88,6 @@ final class PublicArticleController extends AbstractController
         ]);
     }
 */
-    #[Route('/{id}/{slug}', name: 'public_article_show', methods: ['GET'])]
-    public function show(Article $article, EntityManagerInterface $em): Response
-    {
-        $sections = $em->getRepository(Section::class)->findAll();
-        $sectionCount = $em->getRepository(Section::class)->getArticleCountPerSection();
-        $authors = $em->getRepository(Article::class)->getAuthors($em);
-        return $this->render('public_article/show.html.twig', [
-            'article' => $article,
-            'sections' => $sections,
-            'sectionCount' => $sectionCount,
-            'authors' => $authors,
-        ]);
-    }
 /*
     #[Route('/{id}/edit', name: 'app_public_article_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Article $article, EntityManagerInterface $entityManager): Response

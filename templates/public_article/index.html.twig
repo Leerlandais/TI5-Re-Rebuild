@@ -157,12 +157,12 @@
                             <div class="card-body">
 
                                 {# AFIN D'ETRE SUR QUE ON RECUPE LE BON ARTICLE, IL FAUT UTILISER L'ID CAR LE SLUG N'EST PAS TOUJOURS UNIQUE! #}
-
                                 <h3 class="mb-3"><a class="post-title" href="{{ path('public_article_show', {id: article.id, slug: article.titleSlug}) }}">{{ article.title }}</a></h3>
                                 <ul class="card-meta list-inline">
                                     <li class="list-inline-item">
-                                        <a href="author-single.html" class="card-meta-author">
-                                            <img src="{{ asset('images/john-doe.jpg') }}" alt="John Doe">
+                                        <a href="{{ path('public_article_author', {id: article.user.id}) }}" class="card-meta-author">
+                                            {% set imgSrc = article.user.imgLoc starts with 'http' ? article.user.imgLoc : asset(article.user.imgLoc) %}
+                                            <img src="{{ asset(imgSrc) }}" alt="John Doe">
                                             <span>{{ article.user.fullname }}</span>
                                         </a>
                                     </li>
@@ -318,7 +318,8 @@
                         <!-- post-item -->
                         <article class="widget-card">
                             <div class="d-flex">
-                                <img class="card-img-sm" src="{{ asset('images/post/post-10.jpg') }}">
+                                {% set rand = random(1,10) %}
+                                <img class="card-img-sm" src="{{ asset('images/post/post-'~ rand ~'.jpg') }}">
                                 <div class="ml-3">
                                     <h5><a class="post-title" href="post/elements/">{{ recent.title }}</a></h5>
                                     <ul class="card-meta list-inline mb-0">

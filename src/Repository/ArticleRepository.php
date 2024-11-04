@@ -93,28 +93,16 @@ class ArticleRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
-    //    /**
-    //     * @return Article[] Returns an array of Article objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('a')
-    //            ->andWhere('a.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('a.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
 
-    //    public function findOneBySomeField($value): ?Article
-    //    {
-    //        return $this->createQueryBuilder('a')
-    //            ->andWhere('a.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
+
+// In ArticleRepository
+    public function getArticlesByAuthor(EntityManagerInterface $em, int $authorId): array
+    {
+        return $em->getRepository(Article::class)->createQueryBuilder('a')
+            ->where('a.user_id = :authorId')
+            ->setParameter('authorId', $authorId)
+            ->getQuery()
+            ->getResult();
+    }
+
 }
