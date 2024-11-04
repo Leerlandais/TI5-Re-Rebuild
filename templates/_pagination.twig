@@ -1,0 +1,42 @@
+
+<div class="d-flex justify-content-center py-4">
+    {# First Page #}
+    {% if pagination.currentPageNumber > 3 %}
+        <a href="{{ path(app.request.attributes.get('_route'), app.request.query.all|merge({'page': 1})) }}"
+           class="btn btn-outline-primary mx-1">1</a>
+        {% if pagination.currentPageNumber > 4 %}
+            <span class="mx-1">...</span>
+        {% endif %}
+    {% endif %}
+
+    {# Prev Page #}
+    {% if pagination.previousPageNumber is defined %}
+        <a href="{{ path(app.request.attributes.get('_route'), app.request.query.all|merge({'page': pagination.previousPageNumber})) }}"
+           class="btn btn-outline-primary mx-1">Previous</a>
+    {% endif %}
+
+    {# Middle Pages #}
+    {% for page in pagination.currentPageNumber - 1..pagination.currentPageNumber + 1 %}
+        {% if page > 1 and page < pagination.pageCount %}
+            <a href="{{ path(app.request.attributes.get('_route'), app.request.query.all|merge({'page': page})) }}"
+               class="btn {{ page == pagination.currentPageNumber ? 'btn-primary text-white' : 'btn-outline-primary' }} mx-1">
+                {{ page }}
+            </a>
+        {% endif %}
+    {% endfor %}
+
+    {# Next Page #}
+    {% if pagination.nextPageNumber is defined %}
+        <a href="{{ path(app.request.attributes.get('_route'), app.request.query.all|merge({'page': pagination.nextPageNumber})) }}"
+           class="btn btn-outline-primary mx-1">Next</a>
+    {% endif %}
+
+    {# Last Page #}
+    {% if pagination.currentPageNumber < pagination.pageCount - 2 %}
+        {% if pagination.currentPageNumber < pagination.pageCount - 3 %}
+            <span class="mx-1">...</span>
+        {% endif %}
+        <a href="{{ path(app.request.attributes.get('_route'), app.request.query.all|merge({'page': pagination.pageCount})) }}"
+           class="btn btn-outline-primary mx-1">{{ pagination.pageCount }}</a>
+    {% endif %}
+</div>
