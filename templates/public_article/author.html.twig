@@ -1,24 +1,21 @@
 {% extends 'template.html.twig' %}
 
 {% block banner %}
-<div class="author">
+    <div class="author">
     <div class="container">
         <div class="row no-gutters justify-content-center">
             <div class="col-lg-3 col-md-4 mb-4 mb-md-0">
 
-                <img class="author-image" src="https://www.gravatar.com/avatar/df5fe0c7d20b494dd2c68e0d8ef9bbf2?s=320&pg&d=identicon">
+                    {% set imgSrc = author.imgLoc starts with 'http' ? author.imgLoc : asset(author.imgLoc) %}
+                    <img src="{{ asset(imgSrc) }}" class="card-img-top h-fit w-fit px-5" alt="post-thumb">
 
             </div>
             <div class="col-md-8 col-lg-6 text-center text-md-left">
-                <h3 class="mb-2">Charls Xaviar</h3>
-                    <strong class="mb-2 d-block">Author &amp; developer of Bexer, Biztrox theme</strong>
-                    <div class="content">
-                        <p>Donec nisi dolor, consequat vel pretium id, auctor in dui. Nam iaculis, neque ac ullamcorper.</p>
-
-                    </div>
+                <h3 class="mb-2">{{ author.fullname }}</h3>
+                    <strong class="mb-2 d-block">{{ author.quote }}</strong>
 
                     <a class="post-count mb-1" href="author-single.html#post"><i class="ti-pencil-alt mr-2"></i><span
-                                class="text-primary">2</span> Posts by this author</a>
+                                class="text-primary">fdgfdgd</span> Post by this author</a>
                     <ul class="list-inline social-icons">
 
                         <li class="list-inline-item"><a href="#"><i class="ti-facebook"></i></a></li>
@@ -81,4 +78,45 @@
                 stroke-width="2" />
     </svg>
 </div>
+    <section class="section-sm" id="post">
+        <div class="container">
+            <div class="row">
+
+                <div class="col-lg-8 mx-auto">
+                    {% for article in articles %}
+                    <article class="card mb-4">
+                        <div class="card-body">
+                            <h3 class="mb-3"><a class="post-title" href="post-details.html">Advice From a Twenty Something</a></h3>
+                            <ul class="card-meta list-inline">
+                                <li class="list-inline-item">
+                                    <a href="author-single.html" class="card-meta-author">
+                                        <img src="images/john-doe.jpg">
+                                        <span>Charls Xaviar</span>
+                                    </a>
+                                </li>
+                                <li class="list-inline-item">
+                                    <i class="ti-timer"></i>2 Min To Read
+                                </li>
+                                <li class="list-inline-item">
+                                    <i class="ti-calendar"></i>14 jan, 2020
+                                </li>
+                                <li class="list-inline-item">
+                                    <ul class="card-meta-tag list-inline">
+                                        <li class="list-inline-item"><a href="tags.html">Color</a></li>
+                                        <li class="list-inline-item"><a href="tags.html">Recipe</a></li>
+                                        <li class="list-inline-item"><a href="tags.html">Fish</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            <p>It’s no secret that the digital industry is booming. From exciting startups to global brands, companies are reaching out to digital agencies, responding to the new possibilities available.</p>
+                            <a href="post-details.html" class="btn btn-outline-primary">Read More</a>
+                        </div>
+                    </article>
+                    {% endfor %}
+                </div>
+
+            </div>
+        </div>
+    </section>
+
 {% endblock %}

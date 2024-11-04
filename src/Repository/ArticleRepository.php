@@ -99,10 +99,12 @@ class ArticleRepository extends ServiceEntityRepository
     public function getArticlesByAuthor(EntityManagerInterface $em, int $authorId): array
     {
         return $em->getRepository(Article::class)->createQueryBuilder('a')
-            ->where('a.user_id = :authorId')
-            ->setParameter('authorId', $authorId)
-            ->getQuery()
-            ->getResult();
+        ->select('a.id')
+        ->where('a.user = :user')
+        ->setParameter('user', $authorId)
+        ->andWhere('a.published = true')
+        ->getQuery()
+        ->getScalarResult();
     }
 
 }

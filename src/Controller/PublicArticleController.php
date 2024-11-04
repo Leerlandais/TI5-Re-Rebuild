@@ -55,13 +55,15 @@ final class PublicArticleController extends AbstractController
     public function author(EntityManagerInterface $em, int $id): Response
     {
 
-        $author = $em->getRepository(User::class)->findBy(['id' => $id]);
-        $authorId = $author[0]->getId();
 
-        $authorArts = $this->articleRepository->getArticlesByAuthor($em, $authorId);
+        $author = $em->getRepository(User::class)->find($id);
+        $authorId = $author->getId();
+
+        $articles = $this->articleRepository->getArticlesByAuthor($em, $authorId);
 
         return $this->render('public_article/author.html.twig', [
-            'authorArts' => $authorArts,
+            'author' => $author,
+            'articles' => $articles,
         ]);
 
     }
