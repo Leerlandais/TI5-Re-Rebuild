@@ -145,13 +145,20 @@
                     <h2 class="h5 section-title">Recent Posts</h2>
 
                     {% for article in pagination.items %}
+                        {% set rand = random(1, 10) %}
+                        {% set firstImage = 'images/post/post-' ~ rand ~ '.jpg' %}
+                        {% set rand = random(1, 10) %}
+                        {% set secondImage = 'images/post/post-' ~ rand ~ '.jpg' %}
                         <article class="card mb-4">
                             <div class="post-slider">
-                                <img src="{{ asset('images/post/post-10.jpg') }}" class="card-img-top" alt="post-thumb">
-                                <img src="{{ asset('images/post/post-1.jpg') }}" class="card-img-top" alt="post-thumb">
+                                <img src="{{ asset(firstImage) }}" class="card-img-top" alt="post-thumb">
+                                <img src="{{ asset(secondImage) }}" class="card-img-top" alt="post-thumb">
                             </div>
                             <div class="card-body">
-                                <h3 class="mb-3"><a class="post-title" href="post-elements.html">{{ article.title }}</a></h3>
+
+                                {# AFIN D'ETRE SUR QUE ON RECUPE LE BON ARTICLE, IL FAUT UTILISER L'ID CAR LE SLUG N'EST PAS TOUJOURS UNIQUE! #}
+
+                                <h3 class="mb-3"><a class="post-title" href="{{ path('public_article_show', {id: article.id, slug: article.titleSlug}) }}">{{ article.title }}</a></h3>
                                 <ul class="card-meta list-inline">
                                     <li class="list-inline-item">
                                         <a href="author-single.html" class="card-meta-author">
