@@ -133,21 +133,10 @@
                 <div class="col-lg-9 mx-auto">
                     <h1 class="mb-5">What Would You <br> Like To Read Today?</h1>
                     <ul class="list-inline widget-list-inline">
-                        <li class="list-inline-item"><a href="#">City</a></li>
-                        <li class="list-inline-item"><a href="#">Color</a></li>
-                        <li class="list-inline-item"><a href="#">Creative</a></li>
-                        <li class="list-inline-item"><a href="#">Decorate</a></li>
-                        <li class="list-inline-item"><a href="#">Demo</a></li>
-                        <li class="list-inline-item"><a href="#">Elements</a></li>
-                        <li class="list-inline-item"><a href="#">Fish</a></li>
-                        <li class="list-inline-item"><a href="#">Food</a></li>
-                        <li class="list-inline-item"><a href="#">Nice</a></li>
-                        <li class="list-inline-item"><a href="#">Recipe</a></li>
-                        <li class="list-inline-item"><a href="#">Season</a></li>
-                        <li class="list-inline-item"><a href="#">Taste</a></li>
-                        <li class="list-inline-item"><a href="#">Tasty</a></li>
-                        <li class="list-inline-item"><a href="#">Vlog</a></li>
-                        <li class="list-inline-item"><a href="#">Wow</a></li>
+
+                        {% for section in sections %}
+                        <li class="list-inline-item"><a href="#">{{ section.sectionTitle }}</a></li>
+                        {% endfor %}
                     </ul>
                 </div>
             </div>

@@ -16,6 +16,16 @@ class SectionRepository extends ServiceEntityRepository
         parent::__construct($registry, Section::class);
     }
 
+
+    public function getArticleCountPerSection()
+    {
+        return $this->createQueryBuilder('s')
+            ->leftJoin('s.articles', 'a')
+            ->addSelect('COUNT(a.id) AS article_count')
+            ->groupBy('s.id')
+            ->getQuery()
+            ->getResult();
+    }
     //    /**
     //     * @return Section[] Returns an array of Section objects
     //     */

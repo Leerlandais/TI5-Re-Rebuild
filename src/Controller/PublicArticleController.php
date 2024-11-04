@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Article;
+use App\Entity\Section;
 use App\Repository\ArticleRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
@@ -24,9 +25,13 @@ final class PublicArticleController extends AbstractController
     #[Route(name: 'public_article_index', methods: ['GET'])]
     public function index(EntityManagerInterface $em, PaginatorInterface $pagi, Request $request): Response
     {
+        $sections = $em->getRepository(Section::class)->findAll();
+        $sectionCount = $em->getRepository(Section::class)->getArticleCountPerSection();
 
         return $this->render('public_article/index.html.twig', [
             'pagination' => $this->articleRepository->getPagination($em, $pagi, $request),
+            'sections' => $sections,
+            'sectionCount' => $sectionCount,
         ]);
     }
 /*

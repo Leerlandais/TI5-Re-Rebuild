@@ -188,6 +188,7 @@
 
 
                 <aside class="col-lg-4 sidebar-home">
+                    {#
                     <!-- Search -->
                     <div class="widget">
                         <h4 class="widget-title"><span>Search</span></h4>
@@ -197,7 +198,7 @@
                             <button type="submit" class="btn btn-primary btn-block">Search</button>
                         </form>
                     </div>
-
+                    #}
                     <!-- about me -->
                     <div class="widget widget-about">
                         <h4 class="widget-title">Hi, I am Alex!</h4>
@@ -260,6 +261,7 @@
                             </div>
                         </div>
                     </div>
+                    {#
                     <!-- Search -->
 
                     <div class="widget">
@@ -274,25 +276,24 @@
                             </div>
                         </form>
                     </div>
-
+                    #}
                     <!-- categories -->
                     <div class="widget widget-categories">
-                        <h4 class="widget-title"><span>Categories</span></h4>
+                        <h4 class="widget-title"><span>Sections</span></h4>
                         <ul class="list-unstyled widget-list">
-                            <li><a href="#" class="d-flex">Creativity <small class="ml-auto">(4)</small></a></li>
-                            <li><a href="#" class="d-flex">Demo <small class="ml-auto">(1)</small></a></li>
-                            <li><a href="#" class="d-flex">Elements <small class="ml-auto">(1)</small></a></li>
-                            <li><a href="#" class="d-flex">Food <small class="ml-auto">(1)</small></a></li>
-                            <li><a href="#" class="d-flex">Microwave <small class="ml-auto">(1)</small></a></li>
-                            <li><a href="#" class="d-flex">Natural <small class="ml-auto">(3)</small></a></li>
-                            <li><a href="#" class="d-flex">Newyork city <small class="ml-auto">(1)</small></a></li>
-                            <li><a href="#" class="d-flex">Nice <small class="ml-auto">(1)</small></a></li>
-                            <li><a href="#" class="d-flex">Tech <small class="ml-auto">(2)</small></a></li>
-                            <li><a href="#" class="d-flex">Videography <small class="ml-auto">(1)</small></a></li>
-                            <li><a href="#" class="d-flex">Vlog <small class="ml-auto">(1)</small></a></li>
-                            <li><a href="#" class="d-flex">Wondarland <small class="ml-auto">(1)</small></a></li>
+                            {% for entry in sectionCount %}
+                                {% set section = entry[0] %}
+                                <li>
+                                    <a href="#" class="d-flex">
+                                        {{ section.sectionTitle }}
+                                        <small class="ml-auto">({{ entry.article_count }})</small>
+                                    </a>
+                                </li>
+                            {% endfor %}
                         </ul>
+
                     </div><!-- tags -->
+                        {#
                     <div class="widget">
                         <h4 class="widget-title"><span>Tags</span></h4>
                         <ul class="list-inline widget-list-inline widget-card">
@@ -312,7 +313,9 @@
                             <li class="list-inline-item"><a href="#">Vlog</a></li>
                             <li class="list-inline-item"><a href="#">Wow</a></li>
                         </ul>
-                    </div><!-- recent post -->
+                    </div>
+                        #}
+                    <!-- recent post -->
                     <div class="widget">
                         <h4 class="widget-title">Recent Post</h4>
 
