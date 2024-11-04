@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Article;
+use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
@@ -82,6 +83,15 @@ class ArticleRepository extends ServiceEntityRepository
             'prev' => $previousArticle,
             'next' => $nextArticle,
         ];
+    }
+
+    public function getAuthors(EntityManagerInterface $em): array
+    {
+        return $em->getRepository(User::class)->createQueryBuilder('u')
+            ->where('u.roles NOT LIKE :role')
+            ->setParameter('role', '%ROLE_USER%')
+            ->getQuery()
+            ->getResult();
     }
     //    /**
     //     * @return Article[] Returns an array of Article objects

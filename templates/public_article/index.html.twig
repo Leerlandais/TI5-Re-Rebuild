@@ -2,7 +2,7 @@
 
 {% block content %}
 
-    {{ dump(pagination) }}
+    {#
     <section class="section pb-0">
         <div class="container">
             <div class="row">
@@ -137,7 +137,7 @@
             </div>
         </div>
     </section>
-
+    #}
     <section class="section-sm">
         <div class="container">
             <div class="row justify-content-center">
@@ -201,9 +201,9 @@
                     #}
                     <!-- about me -->
                     <div class="widget widget-about">
-                        <h4 class="widget-title">Hi, I am Alex!</h4>
-                        <img class="img-fluid" src="{{ asset('images/author.jpg') }}" alt="Themefisher">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vel in in donec iaculis tempus odio nunc laoreet . Libero ullamcorper.</p>
+                        <h4 class="widget-title">Hi, I'm Lee!</h4>
+                        <img class="img-fluid" src="{{ asset('images/lee.jpg') }}" alt="Themefisher">
+                        <p>Eat, Code, Sleep, Repeat</p>
                         <ul class="list-inline social-icons mb-3">
 
                             <li class="list-inline-item"><a href="#"><i class="ti-facebook"></i></a></li>
@@ -219,7 +219,7 @@
                         </ul>
                         <a href="about-me.html" class="btn btn-primary mb-2">About me</a>
                     </div>
-
+                {#
                     <!-- Promotion -->
                     <div class="promotion">
                         <img src="{{ asset('images/promotion.jpg') }}" class="img-fluid w-100">
@@ -229,37 +229,24 @@
                             <a href="https://themefisher.com/" class="btn btn-primary">Get Started</a>
                         </div>
                     </div>
-
+                #}
                     <!-- authors -->
                     <div class="widget widget-author">
                         <h4 class="widget-title">Authors</h4>
+                        {% for author in authors %}
+                            {% if author.id != 1 %}
                         <div class="media align-items-center">
                             <div class="mr-3">
-                                <img class="widget-author-image" src="{{ asset('images/john-doe.jpg') }}">
+                                {% set imgSrc = author.imgLoc starts with 'http' ? author.imgLoc : asset(author.imgLoc) %}
+                                <img class="widget-author-image" src="{{ asset(imgSrc) }}">
                             </div>
                             <div class="media-body">
-                                <h5 class="mb-1"><a class="post-title" href="author-single.html">Charls Xaviar</a></h5>
-                                <span>Author &amp; developer of Bexer, Biztrox theme</span>
+                                <h5 class="mb-1"><a class="post-title" href="author-single.html">{{ author.fullname }}</a></h5>
+                                <span>{{ author.quote }}</span>
                             </div>
                         </div>
-                        <div class="media align-items-center">
-                            <div class="mr-3">
-                                <img class="widget-author-image" src="{{ asset('images/kate-stone.jpg') }}">
-                            </div>
-                            <div class="media-body">
-                                <h5 class="mb-1"><a class="post-title" href="author-single.html">Kate Stone</a></h5>
-                                <span>Author &amp; developer of Bexer, Biztrox theme</span>
-                            </div>
-                        </div>
-                        <div class="media align-items-center">
-                            <div class="mr-3">
-                                <img class="widget-author-image" src="{{ asset('images/john-doe.jpg') }}" alt="John Doe">
-                            </div>
-                            <div class="media-body">
-                                <h5 class="mb-1"><a class="post-title" href="author-single.html">John Doe</a></h5>
-                                <span>Author &amp; developer of Bexer, Biztrox theme</span>
-                            </div>
-                        </div>
+                            {% endif %}
+                        {% endfor %}
                     </div>
                     {#
                     <!-- Search -->
@@ -318,50 +305,23 @@
                     <!-- recent post -->
                     <div class="widget">
                         <h4 class="widget-title">Recent Post</h4>
-
+                    {% set recentArts = pagination.items|slice(0,3) %}
+                        {% for recent in recentArts %}
                         <!-- post-item -->
                         <article class="widget-card">
                             <div class="d-flex">
                                 <img class="card-img-sm" src="{{ asset('images/post/post-10.jpg') }}">
                                 <div class="ml-3">
-                                    <h5><a class="post-title" href="post/elements/">Elements That You Can Use In This Template.</a></h5>
+                                    <h5><a class="post-title" href="post/elements/">{{ recent.title }}</a></h5>
                                     <ul class="card-meta list-inline mb-0">
                                         <li class="list-inline-item mb-0">
-                                            <i class="ti-calendar"></i>15 jan, 2020
+                                            <i class="ti-calendar"></i>{{ recent.articleDatePosted | date ('F j, Y') }}
                                         </li>
                                     </ul>
                                 </div>
                             </div>
                         </article>
-
-                        <article class="widget-card">
-                            <div class="d-flex">
-                                <img class="card-img-sm" src="{{ asset('images/post/post-3.jpg') }}">
-                                <div class="ml-3">
-                                    <h5><a class="post-title" href="#">Advice From a Twenty Something</a></h5>
-                                    <ul class="card-meta list-inline mb-0">
-                                        <li class="list-inline-item mb-0">
-                                            <i class="ti-calendar"></i>14 jan, 2020
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </article>
-
-                        <article class="widget-card">
-                            <div class="d-flex">
-                                <img class="card-img-sm" src="{{ asset('images/post/post-7.jpg') }}">
-                                <div class="ml-3">
-                                    <h5><a class="post-title" href="#">Advice From a Twenty Something</a></h5>
-                                    <ul class="card-meta list-inline mb-0">
-                                        <li class="list-inline-item mb-0">
-                                            <i class="ti-calendar"></i>14 jan, 2020
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </article>
-                    </div>
+                        {% endfor %}
 
                     <!-- Social -->
                     <div class="widget">

@@ -27,11 +27,12 @@ final class PublicArticleController extends AbstractController
     {
         $sections = $em->getRepository(Section::class)->findAll();
         $sectionCount = $em->getRepository(Section::class)->getArticleCountPerSection();
-
+        $authors = $em->getRepository(Article::class)->getAuthors($em);
         return $this->render('public_article/index.html.twig', [
             'pagination' => $this->articleRepository->getPagination($em, $pagi, $request),
             'sections' => $sections,
             'sectionCount' => $sectionCount,
+            'authors' => $authors,
         ]);
     }
 /*

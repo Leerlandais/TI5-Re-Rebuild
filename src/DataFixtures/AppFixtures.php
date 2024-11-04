@@ -156,7 +156,7 @@ class AppFixtures extends Fixture
             $article->setTitle($this->createTitle(mt_rand(10,40)));
             $article->setTitleSlug($this->slugify->slugify($article->getTitle()));
             $article->setText($this->createText(mt_rand(4,10)));
-            $date = $this->faker->dateTimeThisDecade();
+            $date = $this->faker->dateTimeThisYear();
             $article->setArticleDateCreated($date);
             $isPub = mt_rand(0, 4);
             $article->setPublished($isPub);
