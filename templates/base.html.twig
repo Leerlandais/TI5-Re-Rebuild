@@ -1,17 +1,37 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>">
-        {% block stylesheets %}
+
+<html lang={% block language %}"en"{% endblock %}><head>
+        <meta charset="utf-8">
+
+
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+        <meta name="theme-name" content="reader" />
+
+        {% block stylesheets %}{% endblock %}
+
+        <!--Favicon-->
+        <link rel="shortcut icon" href="{{ asset('images/favicon.png') }}" type="image/x-icon">
+        <link rel="icon" href="{{ asset('images/favicon.png') }}" type="image/x-icon">
+{% block metadata %}
+        <meta property="og:title" content="Reader | Hugo Personal Blog Template" />
+        <meta property="og:description" content="This is meta description" />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="" />
+        <meta property="og:updated_time" content="2020-03-15T15:40:24+06:00" />
         {% endblock %}
 
-        {% block javascripts %}
-            {% block importmap %}{{ importmap('app') }}{% endblock %}
-        {% endblock %}
-    </head>
-    <body>
-        {% block body %}{% endblock %}
-    </body>
+        <title>{% block title %}{% endblock %}</title>
+</head>
+<body>
+{% block header %}{% endblock %}
+
+{% block banner %}{% endblock %}
+
+{% block content %}{% endblock %}
+{% block footer %}{% endblock %}
+
+{% block scripts %}{% endblock %}
+
+<!-- Main Script -->
+<script src="{{ asset('js/script.js') }}"></script></body>
 </html>
