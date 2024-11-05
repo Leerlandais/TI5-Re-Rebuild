@@ -323,12 +323,10 @@
                                 {% set rand = random(1,10) %}
                                 <img class="card-img-sm" src="{{ asset('images/post/post-'~ rand ~'.jpg') }}" alt="Article Image">
                                 <div class="ml-3">
-                                    <h5><a class="post-title" href="post/elements/">{{ recent.title }}</a></h5>
+                                    <h5><a href="{{ path('public_article_show', {id: recent.id, slug: recent.titleSlug}) }}">{{ recent.title }}</a></h5>
                                     <ul class="card-meta list-inline mb-0">
                                         <li class="list-inline-item mb-0">
-                                            <a href="{{ path('public_article_show', {id: recent.id, slug: recent.titleSlug}) }}">
                                                 <i class="ti-calendar"></i>{{ recent.articleDatePosted | date ('F j, Y') }}
-                                            </a>
                                         </li>
                                     </ul>
                                 </div>
