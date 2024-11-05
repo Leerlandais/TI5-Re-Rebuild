@@ -25,7 +25,7 @@
                                 <a class="nav-link" href="{{ path("app_logout") }}">Edit Comments</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ path("app_logout") }}">Edit Users</a>
+                                <a class="nav-link" href="{{ path("admin_user_index") }}">Edit Users</a>
                             </li>
                         {% endif %}
                         {% if is_granted("ROLE_ADMIN") and not is_granted("ROLE_SUPER") %}

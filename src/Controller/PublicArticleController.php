@@ -77,11 +77,15 @@ final class PublicArticleController extends AbstractController
         $articles = $this->articleRepository->getArticlesBySection($em, $slug);
         $section = $em->getRepository(Section::class)->findOneBy(['section_slug' => $slug])->getSectionTitle();
         $sections = $em->getRepository(Section::class)->findAll();
+        $sectionCount = $em->getRepository(Section::class)->getArticleCountPerSection();
+        $authors = $em->getRepository(Article::class)->getAuthors($em);
 
         return $this->render('public_article/section.html.twig', [
             'articles' => $articles,
             'section' => $section,
             'sections' => $sections,
+            'sectionCount' => $sectionCount,
+            'authors' => $authors,
         ]);
 
     }
