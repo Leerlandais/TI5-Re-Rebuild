@@ -10,9 +10,51 @@
                 <ul class="navbar-nav mx-auto">
 
                     {% if is_granted("IS_AUTHENTICATED") %}
+
+                        {% if is_granted("ROLE_SUPER") %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ path("app_logout") }}">Add Article</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ path("app_logout") }}">Edit Articles</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ path("app_logout") }}">Edit Sections</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ path("app_logout") }}">Edit Comments</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ path("app_logout") }}">Edit Users</a>
+                            </li>
+                        {% endif %}
+                        {% if is_granted("ROLE_ADMIN") %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ path("app_logout") }}">Add Article</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ path("app_logout") }}">Edit Articles</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ path("app_logout") }}">Edit Sections</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ path("app_logout") }}">Edit Comments</a>
+                            </li>
+                        {% endif %}
+                        {% if is_granted("ROLE_REDAC") %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ path("app_logout") }}">Add Article</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ path("app_logout") }}">Edit Your Articles</a>
+                            </li>
+                        {% endif %}
                         <li class="nav-item">
                             <a class="nav-link" href="{{ path("app_logout") }}">Logout</a>
                         </li>
+
+
                     {% else %}
                         <li class="nav-item">
                             <a class="nav-link" href="{{ path('app_login') }}">Login</a>
