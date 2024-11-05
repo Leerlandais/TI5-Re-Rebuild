@@ -82,11 +82,11 @@
 
                     <div>
 
-                        <h3 class="mb-4">Leave a Reply</h3>
                         <form method="POST">
                             <div class="row">
                                 <div class="form-group col-md-12">
-                                    <textarea class="form-control shadow-none" name="comment" rows="7" required {% if not is_granted('IS_AUTHENTICATED') %}disabled{% endif %}></textarea>
+                                    <label for="comment">Leave a Comment</label>
+                                    <textarea class="form-control shadow-none" id="comment" rows="7" required {% if not is_granted('IS_AUTHENTICATED') %}disabled{% endif %}></textarea>
                                 </div>
 
                             </div>
@@ -105,10 +105,5 @@
             </div>
         </div>
     </section>
-
-
-
-    <a href="{{ path('public_article_index') }}">back to list</a>
-
 
 {% endblock %}
