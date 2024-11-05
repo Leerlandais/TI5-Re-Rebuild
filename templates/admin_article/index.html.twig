@@ -1,0 +1,44 @@
+{% extends 'template.html.twig' %}
+
+{% block title %}Article index{% endblock %}
+
+{% block banner %}
+    <br><br>
+    <h3 class="text-center mt-5">Article Index</h3>
+
+    <table class="table mt-5">
+        <thead>
+            <tr>
+
+                <th>Title</th>
+                <th>Text</th>
+                <th>Article_date_created</th>
+                <th>Article_date_posted</th>
+                <th>Published</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for article in articles %}
+            <tr>
+                <td>{{ article.title }}</td>
+                <td>{{ article.text }}</td>
+                <td>{{ article.articleDateCreated ? article.articleDateCreated|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ article.articleDatePosted ? article.articleDatePosted|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ article.published ? 'Yes' : 'No' }}</td>
+                <td>
+                    <a href="{{ path('admin_article_show', {'id': article.id}) }}">show</a>
+                    <a href="{{ path('admin_article_edit', {'id': article.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="9">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+
+    <a href="{{ path('admin_article_new') }}">Create new</a>
+{% endblock %}
