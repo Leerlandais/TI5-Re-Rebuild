@@ -1,0 +1,31 @@
+{% extends 'template.html.twig' %}
+
+{% block title %}Section{% endblock %}
+
+{% block banner %}
+    <br><br>
+<div class="text-center my-5">
+    <h3 class="text-center mt-5">{{ section.sectionTitle }}</h3>
+    <ul class="list-inline widget-list-inline">
+        <li class="list-inline-item"><a href="{{ path('admin_section_index') }}">back to list</a></li>
+        <li class="list-inline-item"><a href="{{ path('admin_section_edit', {'id': section.id}) }}">edit</a></li>
+    </ul>
+    <table class="table">
+        <tbody>
+            <tr>
+            <tr>
+                <th></th>
+                <td>{{ section.sectionTitle }}</td>
+            </tr>
+
+            <tr>
+                <th></th>
+                <td>{{ section.sectionDetail }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+
+</div>
+{# {{ include('admin_section/_delete_form.html.twig') }} #}
+{% endblock %}

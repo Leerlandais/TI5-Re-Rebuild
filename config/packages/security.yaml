@@ -40,6 +40,7 @@ security:
 
     access_control:
          - { path: ^/admin/article, roles: ROLE_REDAC }
+         - { path: ^/admin/section, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }
 
 when@test:

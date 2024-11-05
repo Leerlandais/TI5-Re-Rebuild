@@ -6,6 +6,7 @@ use App\Entity\Article;
 use App\Form\Article1Type;
 use App\Form\PublishedType;
 use App\Repository\ArticleRepository;
+use Cocur\Slugify\Slugify;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -36,11 +37,20 @@ final class AdminArticleController extends AbstractController
     #[Route('/new', name: 'admin_article_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
+        $user = $this->getUser();
         $article = new Article();
         $form = $this->createForm(Article1Type::class, $article);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            $article->setArticleDateCreated(new \DateTime());
+            $article->setUser($user);
+            $article->setPublished(true);
+            $title = $article->getTitle();
+            $slug = Slugify::create()->slugify($title);
+            $article->setTitleSlug($slug);
+
             $entityManager->persist($article);
             $entityManager->flush();
 
