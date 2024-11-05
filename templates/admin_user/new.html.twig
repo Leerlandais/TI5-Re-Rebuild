@@ -1,11 +1,11 @@
-{% extends 'base.html.twig' %}
+{% extends 'template.html.twig' %}
 
 {% block title %}New User{% endblock %}
 
-{% block body %}
+{% block banner %}
     <h1>Create new User</h1>
 
     {{ include('admin_user/_form.html.twig') }}
 
-    <a href="{{ path('app_admin_user_index') }}">back to list</a>
+    <a href="{{ path('admin_user_index') }}">back to list</a>
 {% endblock %}

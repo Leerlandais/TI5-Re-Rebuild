@@ -1,13 +1,16 @@
-{% extends 'base.html.twig' %}
+{% extends 'template.html.twig' %}
 
 {% block title %}Edit User{% endblock %}
 
-{% block body %}
-    <h1>Edit User</h1>
+{% block banner %}
+<br><br>
+<div class="text-center my-5">
+    <h3>Edit User</h3>
 
     {{ include('admin_user/_form.html.twig', {'button_label': 'Update'}) }}
 
-    <a href="{{ path('app_admin_user_index') }}">back to list</a>
+    <a href="{{ path('admin_user_index') }}">back to list</a>
 
     {{ include('admin_user/_delete_form.html.twig') }}
+</div>
 {% endblock %}
