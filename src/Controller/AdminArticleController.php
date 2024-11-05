@@ -70,7 +70,7 @@ final class AdminArticleController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_admin_article_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('admin_article_index', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('admin_article/edit.html.twig', [
