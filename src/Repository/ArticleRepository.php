@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Article;
+use App\Entity\Section;
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -95,16 +96,27 @@ class ArticleRepository extends ServiceEntityRepository
     }
 
 
-// In ArticleRepository
     public function getArticlesByAuthor(EntityManagerInterface $em, int $authorId): array
     {
         return $em->getRepository(Article::class)->createQueryBuilder('a')
-        ->select('a.id')
+        ->select('a')
         ->where('a.user = :user')
         ->setParameter('user', $authorId)
         ->andWhere('a.published = true')
         ->getQuery()
-        ->getScalarResult();
+        ->getResult();
+    }
+
+    public function getArticlesBySection(EntityManagerInterface $em, $slug): array
+    {
+        return $em->getRepository(Article::class)->createQueryBuilder('a')
+            ->where('a.published = 1')
+            ->join('a.sections', 's')
+            ->andWhere('s.section_slug = :slug')
+            ->setParameter('slug', $slug)
+            ->orderBy('a.id', 'DESC')
+            ->getQuery()
+            ->getResult();
     }
 
 }

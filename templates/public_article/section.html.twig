@@ -1,0 +1,55 @@
+{% extends 'template.html.twig' %}
+
+{% block banner %}
+<section class="section">
+    <div class="py-4"></div>
+    <div class="container">
+        <div class="row">
+            <div
+                    class="col-lg-8  mb-5 mb-lg-0">
+                <h1 class="h2 mb-4">Showing items from <mark>{{ section }}</mark></h1>
+
+                {% for article in articles %}
+                    {% set rand = random(1, 10) %}
+                    {% set firstImage = 'images/post/post-' ~ rand ~ '.jpg' %}
+                    {% set rand = random(1, 10) %}
+                    {% set secondImage = 'images/post/post-' ~ rand ~ '.jpg' %}
+                    {% set imgSrc = article.user.imgLoc starts with 'http' ? article.user.imgLoc : asset(article.user.imgLoc) %}
+                <article class="card mb-4">
+                    <div class="post-slider">
+                        <img src="{{ asset(firstImage) }}" class="card-img-top" alt="post-thumb">
+                        <img src="{{ asset(secondImage) }}" class="card-img-top" alt="post-thumb">
+                    </div>
+                    <div class="card-body">
+                        <h3 class="mb-3"><a class="post-title" href="{{ path("public_article_show", {id: article.id, slug: article.titleSlug}) }}">{{ article.title }}</a></h3>
+                        <ul class="card-meta list-inline">
+                            <li class="list-inline-item">
+                                <a href="{{ path('public_article_author', {id: article.user.id}) }}" class="card-meta-author">
+                                    <img src="{{ imgSrc }}" alt="{{ article.user.fullname }}">
+                                    <span>{{ article.user.fullname }}</span>
+                                </a>
+                            </li>
+                            <li class="list-inline-item">
+                                <i class="ti-timer"></i>2 Min To Read
+                            </li>
+                            <li class="list-inline-item">
+                                <i class="ti-calendar"></i>{{ article.articleDatePosted | date("F j, Y") }}
+                            </li>
+                            <li class="list-inline-item">
+                                <ul class="card-meta-tag list-inline">
+                                    {% for section in article.sections %}
+                                    <li class="list-inline-item"><a href="{{ path('public_article_section', { slug: section.sectionSlug }) }}">{{ section.sectionTitle }}</a></li>
+                                    {% endfor %}
+                                </ul>
+                            </li>
+                        </ul>
+                        <p>It’s no secret that the digital industry is booming. From exciting startups to global brands, companies are reaching out to digital agencies, responding to the new possibilities available.</p>
+                        <a href="{{ path("public_article_show", {id: article.id, slug: article.titleSlug}) }}" class="btn btn-outline-primary">Read More</a>
+                    </div>
+                </article>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

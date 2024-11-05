@@ -9,14 +9,19 @@
             <div class="row justify-content-center">
                 <div class=" col-lg-9   mb-5 mb-lg-0">
                     <article>
-                        <div class="post-slider mb-4">
-                            <img src="images/post/post-2.jpg" class="card-img" alt="post-thumb">
+                        {% set rand = random(1, 10) %}
+                        {% set firstImage = 'images/post/post-' ~ rand ~ '.jpg' %}
+                        {% set rand = random(1, 10) %}
+                        {% set secondImage = 'images/post/post-' ~ rand ~ '.jpg' %}
+                        <div class="post-slider">
+                            <img src="{{ asset(firstImage) }}" class="card-img-top" alt="post-thumb">
+                            <img src="{{ asset(secondImage) }}" class="card-img-top" alt="post-thumb">
                         </div>
 
                         <h2 class="h2">{{ article.title }}</h2>
                         <ul class="card-meta my-3 list-inline">
                             <li class="list-inline-item">
-                                <a href="author-single.html" class="card-meta-author">
+                                <a href="{{ path('public_article_author', {id: article.user.id}) }}" class="card-meta-author">
                                     {% set imgSrc = article.user.imgLoc starts with 'http' ? article.user.imgLoc : asset(article.user.imgLoc) %}
                                     <img src="{{ imgSrc }}">
                                     <span>{{ article.user.fullname }}</span>
@@ -31,7 +36,7 @@
                             <li class="list-inline-item">
                                 <ul class="card-meta-tag list-inline">
                                     {% for section in article.sections %}
-                                    <li class="list-inline-item"><a href="tags.html">{{ section.sectionTitle }}</a></li>
+                                    <li class="list-inline-item"><a href="{{ path('public_article_section', {slug: section.sectionSlug}) }}">{{ section.sectionTitle }}</a></li>
                                     {% endfor %}
 
                                 </ul>

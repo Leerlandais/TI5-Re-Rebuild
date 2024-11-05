@@ -16,7 +16,7 @@
     <header class="navigation fixed-top">
         <div class="container">
             <nav class="navbar navbar-expand-lg navbar-white">
-                <a class="navbar-brand order-1" href="index.html">
+                <a class="navbar-brand order-1" href="{{ path('public_article_index') }}">
                     <img class="img-fluid" width="100px" src="{{ asset('images/logo.png') }}"
                          alt="Reader | Hugo Personal Blog Template">
                 </a>
@@ -135,7 +135,7 @@
                     <ul class="list-inline widget-list-inline">
 
                         {% for section in sections %}
-                        <li class="list-inline-item"><a href="#">{{ section.sectionTitle }}</a></li>
+                        <li class="list-inline-item"><a href="{{ path('public_article_section', {slug: section.sectionSlug}) }}">{{ section.sectionTitle }}</a></li>
                         {% endfor %}
                     </ul>
                 </div>

@@ -246,7 +246,7 @@
                         <div class="media align-items-center">
                             <div class="mr-3">
                                 {% set imgSrc = author.imgLoc starts with 'http' ? author.imgLoc : asset(author.imgLoc) %}
-                                <a class="post-title" href="{{ path('public_article_author', { id: author.id }) }}">{{ author.fullname }}
+                                <a class="post-title" href="{{ path('public_article_author', { id: author.id }) }}">
                                     <img class="widget-author-image" src="{{ asset(imgSrc) }}" alt="{{ author.fullname }}">
                                 </a>
                             </div>
@@ -281,7 +281,7 @@
                             {% for entry in sectionCount %}
                                 {% set section = entry[0] %}
                                 <li>
-                                    <a href="#" class="d-flex">
+                                    <a href="{{ path('public_article_section', {slug: section.sectionSlug}) }}" class="d-flex">
                                         {{ section.sectionTitle }}
                                         <small class="ml-auto">({{ entry.article_count }})</small>
                                     </a>

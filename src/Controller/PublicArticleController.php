@@ -60,10 +60,26 @@ final class PublicArticleController extends AbstractController
         $authorId = $author->getId();
 
         $articles = $this->articleRepository->getArticlesByAuthor($em, $authorId);
+        $artCount = count($articles);
 
         return $this->render('public_article/author.html.twig', [
             'author' => $author,
             'articles' => $articles,
+            'artCount' => $artCount,
+        ]);
+
+    }
+
+    #[Route('/section/{slug}', name: 'public_article_section', requirements: ['slug' => '.+'], methods: ['GET'])]
+    public function section(EntityManagerInterface $em, string $slug): Response
+    {
+
+        $articles = $this->articleRepository->getArticlesBySection($em, $slug);
+        $section = $em->getRepository(Section::class)->findOneBy(['section_slug' => $slug])->getSectionTitle();
+
+        return $this->render('public_article/section.html.twig', [
+            'articles' => $articles,
+            'section' => $section,
         ]);
 
     }
