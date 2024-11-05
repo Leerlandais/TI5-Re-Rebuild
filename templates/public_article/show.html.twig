@@ -81,35 +81,29 @@
                     </div>
 
                     <div>
-                        <h3 class="mb-4">Leave a Reply</h3>
+
                         <form method="POST">
                             <div class="row">
                                 <div class="form-group col-md-12">
-                                    <textarea class="form-control shadow-none" name="comment" rows="7" required></textarea>
+                                    <label for="comment">Leave a Comment</label>
+                                    <textarea class="form-control shadow-none" id="comment" rows="7" required {% if not is_granted('IS_AUTHENTICATED') %}disabled{% endif %}></textarea>
                                 </div>
-                                <div class="form-group col-md-4">
-                                    <input class="form-control shadow-none" type="text" placeholder="Name" required>
-                                </div>
-                                <div class="form-group col-md-4">
-                                    <input class="form-control shadow-none" type="email" placeholder="Email" required>
-                                </div>
-                                <div class="form-group col-md-4">
-                                    <input class="form-control shadow-none" type="url" placeholder="Website">
-                                    <p class="font-weight-bold valid-feedback">OK! You can skip this field.</p>
-                                </div>
+
                             </div>
-                            <button class="btn btn-primary" type="submit">Comment Now</button>
+                            <button class="btn btn-primary" {% if not is_granted('IS_AUTHENTICATED') %}disabled{% endif %} type="submit">
+                                {% if not is_granted('IS_AUTHENTICATED') %}
+                                    <a href="{{ path('app_login') }}" class="text-white">Log in to Comment</a>
+                                {% else %}
+                                Comment Now
+                                {% endif %}
+                            </button>
                         </form>
+
                     </div>
                 </div>
 
             </div>
         </div>
     </section>
-
-
-
-    <a href="{{ path('public_article_index') }}">back to list</a>
-
 
 {% endblock %}
