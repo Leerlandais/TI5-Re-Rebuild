@@ -38,20 +38,13 @@ final class PublicArticleController extends AbstractController
     }
 
     #[Route('/{id}/{slug}', name: 'public_article_show', requirements: ['id' => '\d+', 'slug' => '.+'], methods: ['GET'])]
-    public function show(Article $article, EntityManagerInterface $em, int $id): Response
+    public function show(EntityManagerInterface $em, int $id): Response
     {
         $sections = $em->getRepository(Section::class)->findAll();
         $sectionCount = $em->getRepository(Section::class)->getArticleCountPerSection();
         $authors = $this->articleRepository->getAuthors($em);
 
-        $article = $this->articleRepository->createQueryBuilder('a')
-            ->leftJoin('a.comments', 'c')
-            ->leftJoin('c.user', 'commentUser')
-            ->addSelect('c', 'commentUser')
-            ->andWhere('a.id = :id')
-            ->setParameter('id', $id)
-            ->getQuery()
-            ->getOneOrNullResult();
+        $article = $this->articleRepository->getCommentsByArticle($em, $id);
 
 
         return $this->render('public_article/show.html.twig', [
