@@ -47,7 +47,8 @@ final class PublicArticleController extends AbstractController
         $authors = $this->articleRepository->getAuthors($em);
 
         $article = $this->articleRepository->getCommentsByArticle($em, $id);
-
+        $author = $article->getUser()->getId();
+        $articles = $this->articleRepository->findAdjacentArticles($id, $author);
         $comment = new Comment();
         $form = $this->createForm(CommentType::class, $comment);
         $form->handleRequest($request);
@@ -71,7 +72,9 @@ final class PublicArticleController extends AbstractController
 
 
         return $this->render('public_article/show.html.twig', [
-            'article' => $article,
+            'article' => $articles['main'],
+            'prev_art' => $articles['prev'],
+            'next_art' => $articles['next'],
             'sections' => $sections,
             'sectionCount' => $sectionCount,
             'authors' => $authors,
