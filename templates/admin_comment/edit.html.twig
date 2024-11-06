@@ -3,11 +3,12 @@
 {% block title %}Edit Comment{% endblock %}
 
 {% block banner %}
-    <h1>Edit Comment</h1>
+<br><br>
+<div class="text-center my-5">
+    <h3>Edit Comment</h3>
 
     {{ include('admin_comment/_form.html.twig', {'button_label': 'Update'}) }}
 
     <a href="{{ path('admin_comment_index') }}">back to list</a>
-
-    {{ include('admin_comment/_delete_form.html.twig') }}
+</div>
 {% endblock %}
