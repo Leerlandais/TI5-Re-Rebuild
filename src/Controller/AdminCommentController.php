@@ -44,10 +44,18 @@ final class AdminCommentController extends AbstractController
     }
 
     #[Route('/{id}', name: 'admin_comment_show', methods: ['GET', 'POST'])]
-    public function show(Comment $comment, Request $request): Response
+    public function show(Comment $comment, Request $request, EntityManagerInterface $entityManager): Response
     {
         $form = $this->createForm(CommPublishedType::class, $comment);
         $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->persist($comment);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('admin_comment_index', [], Response::HTTP_SEE_OTHER);
+        }
+
         return $this->render('admin_comment/show.html.twig', [
             'comment' => $comment,
             'form' => $form,
