@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Comment;
 use App\Form\Comment1Type;
+use App\Form\CommPublishedType;
 use App\Repository\CommentRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -42,11 +43,14 @@ final class AdminCommentController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'admin_comment_show', methods: ['GET'])]
-    public function show(Comment $comment): Response
+    #[Route('/{id}', name: 'admin_comment_show', methods: ['GET', 'POST'])]
+    public function show(Comment $comment, Request $request): Response
     {
+        $form = $this->createForm(CommPublishedType::class, $comment);
+        $form->handleRequest($request);
         return $this->render('admin_comment/show.html.twig', [
             'comment' => $comment,
+            'form' => $form,
         ]);
     }
 

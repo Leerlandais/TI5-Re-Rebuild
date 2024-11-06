@@ -2,24 +2,24 @@
 
 namespace App\Form;
 
-use App\Entity\Article;
+use App\Entity\Comment;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class PublishedType extends AbstractType
+class CommPublishedType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('published')
+            ->add('visible')
         ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => Article::class,
+            'data_class' => Comment::class,
         ]);
     }
 }
