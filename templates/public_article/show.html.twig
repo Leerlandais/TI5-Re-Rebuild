@@ -91,23 +91,27 @@
                     </div>
 
                     <div>
-                        {#  {% include ('public_article/_comment_form.html.twig') %} #}
+                          {% include ('public_article/_comment_form.html.twig') %}
+                        {#
                         <form method="POST">
                             <div class="row">
                                 <div class="form-group col-md-12">
                                     <label for="comment">Leave a Comment</label>
-                                    <textarea class="form-control shadow-none" id="comment" rows="7" required {% if not is_granted('IS_AUTHENTICATED') %}disabled{% endif %}></textarea>
+                                    <textarea class="form-control shadow-none" id="comment" rows="7" required
+                                              {% if not is_granted('IS_AUTHENTICATED') %}disabled{% endif %}></textarea>
                                 </div>
 
                             </div>
-                            <button class="btn btn-primary" {% if not is_granted('IS_AUTHENTICATED') %}disabled{% endif %} type="submit">
+                            <button class="btn btn-primary"
+                                    {% if not is_granted('IS_AUTHENTICATED') %}disabled{% endif %} type="submit">
                                 {% if not is_granted('IS_AUTHENTICATED') %}
-                                    <a href="{{ path('app_login') }}" class="text-white">Log in to Comment</a>
+                                <a href="{{ path('app_login') }}" class="text-white">Log in to Comment</a>
                                 {% else %}
                                 Comment Now
                                 {% endif %}
                             </button>
                         </form>
+                        #}
 
                     </div>
                 </div>

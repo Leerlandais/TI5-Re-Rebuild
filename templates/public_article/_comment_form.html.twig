@@ -1,4 +1,28 @@
+
 {{ form_start(form) }}
-    {{ form_widget(form) }}
-<button class="btn">{{ button_label|default('Save') }}</button>
+                {% set disabled = false %}
+            {% if not is_granted('IS_AUTHENTICATED') %}
+                {% set disabled = true %}
+            {% endif %}
+    <div class="row">
+        <div class="form-group col-md-12">
+            <label for="comment">Leave a Comment</label>
+            {{ form_widget(form.comment_text,
+                {'attr': {'class': "form-control shadow-none",
+                    'disabled': disabled,
+                    'id': 'comment',
+                    'placeholder': 'Text',
+                    'type' : 'textarea',
+                    'cols' : 10,
+                    'rows' : 7}}) }}
+        </div>
+
+    </div>
+    <button class="btn btn-primary">
+        {% if not is_granted('IS_AUTHENTICATED') %}
+            <a href="{{ path('app_login') }}" class="text-white">{{ button_label|default('Log in to Comment') }}</a>
+        {% else %}
+            {{ button_label|default('Comment Now') }}
+        {% endif %}
+    </button>
 {{ form_end(form) }}
