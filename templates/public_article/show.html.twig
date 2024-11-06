@@ -44,30 +44,48 @@
                         </ul>
                         <div class="content"><p>{{ article.text }}</div>
                     </article>
+                    <div class="d-flex w-100 pt-3">
+                        <a href="{{ path('public_article_show', { slug: prev_art.titleSlug, id: prev_art.id }) }}" class="col-6 bg-white shadow-sm text-start p-3">
+                            <p class="h5 text-primary fw-bold d-flex align-items-center"><img class="mr-3" src="{{ asset('images/post/arrowLeft.png') }}" alt="Previous"></p>
+                            <p class="pt-2">{{ prev_art.title }}</p>
+                        </a>
+                        <a href="{{ path('public_article_show', { slug: next_art.titleSlug, id: next_art.id }) }}" class="col-6 bg-white shadow-sm text-end p-3">
+                            <p class="h5 text-primary fw-bold d-flex align-items-center justify-content-end"><img class="mr-3" src="{{ asset('images/post/arrowRight.png') }}" alt="Next"></p>
+                            <p class="pt-2 text-right">{{ next_art.title }}</p>
+                        </a>
+                    </div>
 
                 </div>
-
                 <div class="col-lg-9 col-md-12">
                     <div class="mb-5 border-top mt-4 pt-5">
                         <h3 class="mb-4">Comments</h3>
-
+                        {% if article.comments|length == 0 %}
+                        <p>There are no comments for this article</p>
+                            {% else %}
+                             {% for comment in article.comments %}
                         <div class="media d-block d-sm-flex mb-4 pb-4">
-                            <a class="d-inline-block mr-2 mb-3 mb-md-0" href="#">
-                                <img src="images/post/user-01.jpg" class="mr-3 rounded-circle" alt="">
+                            <a class="d-inline-block mr-2 mb-3 mb-md-0" href="#" title="{{ comment.commentUsername }}">
+                                {% set imgSrc = comment.user.imgLoc starts with 'http' ? comment.user.imgLoc : asset(comment.user.imgLoc) %}
+                                <img src="{{ imgSrc }}" class="mr-3 rounded-circle" alt="">
                             </a>
                             <div class="media-body">
-                                <a href="#!" class="h4 d-inline-block mb-3">Alexender Grahambel</a>
+                                <a href="#!" class="h4 d-inline-block mb-3">{{ comment.commentUsername }}</a>
 
-                                <p>Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.</p>
+                                <p>{{ comment.commentText }}</p>
 
-                                <span class="text-black-800 mr-3 font-weight-600">April 18, 2020 at 6.25 pm</span>
-                                <a class="text-primary font-weight-600" href="#!">Reply</a>
+                                <span class="text-black-800 mr-3 font-weight-600">{{ comment.commentDateCreated | date("F j, Y") }}</span>
                             </div>
                         </div>
+                                {% endfor %}
+                        {% endif %}
+
+
+                        <!-- Keep this link in case I dedide to add sub-comments !!!
                         <div class="media d-block d-sm-flex">
                             <div class="d-inline-block mr-2 mb-3 mb-md-0" href="#">
-                                <img class="mr-3" src="images/post/arrow.png" alt="">
-                                <a href="#!"><img src="images/post/user-02.jpg" class="mr-3 rounded-circle" alt=""></a>
+
+                         {#        <img class="mr-3" src="{{ asset('images/post/arrow.png') }}" alt="">     #}
+                         {#       <a href="#!"><img src="{{ asset('images/post/user-02.jpg') }}" class="mr-3 rounded-circle" alt=""></a>        #}
                             </div>
                             <div class="media-body">
                                 <a href="#!" class="h4 d-inline-block mb-3">Nadia Sultana Tisa</a>
@@ -78,26 +96,31 @@
                                 <a class="text-primary font-weight-600" href="#!">Reply</a>
                             </div>
                         </div>
+                        -->
+
                     </div>
-
                     <div>
-
+                          {% include ('public_article/_comment_form.html.twig') %}
+                        {#
                         <form method="POST">
                             <div class="row">
                                 <div class="form-group col-md-12">
                                     <label for="comment">Leave a Comment</label>
-                                    <textarea class="form-control shadow-none" id="comment" rows="7" required {% if not is_granted('IS_AUTHENTICATED') %}disabled{% endif %}></textarea>
+                                    <textarea class="form-control shadow-none" id="comment" rows="7" required
+                                              {% if not is_granted('IS_AUTHENTICATED') %}disabled{% endif %}></textarea>
                                 </div>
 
                             </div>
-                            <button class="btn btn-primary" {% if not is_granted('IS_AUTHENTICATED') %}disabled{% endif %} type="submit">
+                            <button class="btn btn-primary"
+                                    {% if not is_granted('IS_AUTHENTICATED') %}disabled{% endif %} type="submit">
                                 {% if not is_granted('IS_AUTHENTICATED') %}
-                                    <a href="{{ path('app_login') }}" class="text-white">Log in to Comment</a>
+                                <a href="{{ path('app_login') }}" class="text-white">Log in to Comment</a>
                                 {% else %}
                                 Comment Now
                                 {% endif %}
                             </button>
                         </form>
+                        #}
 
                     </div>
                 </div>

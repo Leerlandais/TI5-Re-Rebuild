@@ -3,8 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\Article;
+use App\Entity\Comment;
 use App\Entity\Section;
 use App\Entity\User;
+use App\Form\CommentType;
 use App\Repository\ArticleRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
@@ -37,17 +39,46 @@ final class PublicArticleController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/{slug}', name: 'public_article_show', requirements: ['id' => '\d+', 'slug' => '.+'], methods: ['GET'])]
-    public function show(Article $article, EntityManagerInterface $em): Response
+    #[Route('/{id}/{slug}', name: 'public_article_show', requirements: ['id' => '\d+', 'slug' => '.+'], methods: ['GET', 'POST'])]
+    public function show(EntityManagerInterface $em, int $id, Request $request): Response
     {
         $sections = $em->getRepository(Section::class)->findAll();
         $sectionCount = $em->getRepository(Section::class)->getArticleCountPerSection();
         $authors = $this->articleRepository->getAuthors($em);
+
+        $article = $this->articleRepository->getCommentsByArticle($em, $id);
+        $author = $article->getUser()->getId();
+        $articles = $this->articleRepository->findAdjacentArticles($id, $author);
+        $comment = new Comment();
+        $form = $this->createForm(CommentType::class, $comment);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+                $user = $this->getUser();
+
+                $comment->setArticle($article);
+                $comment->setUser($user);
+                $comment->setCommentDateCreated(new \DateTime());
+                $comment->setCommentUsername($user->getFullname());
+                $comment->setVisible(true);
+
+                $em->persist($comment);
+                $em->flush();
+
+                return $this->redirectToRoute('public_article_show', ['id' => $article->getId(), 'slug' => $article->getTitleSlug()]);
+
+        }
+
+
         return $this->render('public_article/show.html.twig', [
-            'article' => $article,
+            'article' => $articles['main'],
+            'prev_art' => $articles['prev'],
+            'next_art' => $articles['next'],
             'sections' => $sections,
             'sectionCount' => $sectionCount,
             'authors' => $authors,
+            'form' => $form,
         ]);
     }
 

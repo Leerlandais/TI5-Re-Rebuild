@@ -119,4 +119,16 @@ class ArticleRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    public function getCommentsByArticle(EntityManagerInterface $em, $articleId) : Article
+    {
+        return $em->getRepository(Article::class)->createQueryBuilder('a')
+            ->leftJoin('a.comments', 'c')
+            ->leftJoin('c.user', 'commentUser')
+            ->addSelect('c', 'commentUser')
+            ->andWhere('a.id = :id')
+            ->setParameter('id', $articleId)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+
 }
