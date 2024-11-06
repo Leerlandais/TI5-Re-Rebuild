@@ -20,6 +20,10 @@ Renommer les fichiers suivants :
 - compose.yaml => compose.yaml.bak
 - docker-compose.yaml.bak => docker-compose.yaml
 - Dockerfile.bak => Dockerfile
+- .env => .env.back
+- .env.bak => .env
+
+
 ```
 docker-compose up -d
 ```
