@@ -1,0 +1,49 @@
+{% extends 'template.html.twig' %}
+
+{% block title %}Comment{% endblock %}
+
+{% block banner %}
+    <br><br>
+    <div class="text-center my-5">
+        <ul class="list-inline widget-list-inline">
+            <li class="list-inline-item"><a href="{{ path('admin_comment_index') }}">back to list</a></li>
+            <li class="list-inline-item"><a href="{{ path('admin_comment_edit', {'id': comment.id}) }}">edit</a></li>
+        </ul>
+    </div>
+
+    <table class="table text-center mb-5">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ comment.id }}</td>
+            </tr>
+            <tr>
+                <th>Article_id</th>
+                <td>{{ comment.articleId }}</td>
+            </tr>
+            <tr>
+                <th>User_id</th>
+                <td>{{ comment.userId }}</td>
+            </tr>
+            <tr>
+                <th>Comment_date_created</th>
+                <td>{{ comment.commentDateCreated ? comment.commentDateCreated|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Comment_username</th>
+                <td>{{ comment.commentUsername }}</td>
+            </tr>
+            <tr>
+                <th>Comment_text</th>
+                <td>{{ comment.commentText }}</td>
+            </tr>
+            <tr>
+                <th>Visible</th>
+                <td>
+                    {{ include('admin_comment/_publish_form.html.twig') }}
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+{% endblock %}
