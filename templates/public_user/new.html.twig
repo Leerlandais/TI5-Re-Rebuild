@@ -1,0 +1,14 @@
+{% extends 'template.html.twig' %}
+
+{% block title %}New User{% endblock %}
+
+{% block banner %}
+<br><br>
+<div class="text-center my-5">
+    <h3>Create New User</h3>
+
+    {{ include('public_user/_form.html.twig') }}
+
+    <a href="{{ path('public_article_index') }}">back to list</a>
+</div>
+{% endblock %}
