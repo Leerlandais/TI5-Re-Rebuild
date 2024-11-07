@@ -173,56 +173,7 @@ class AppFixtures extends Fixture
 
         $manager->flush();
 
-        $sectionCount = min(($artLength / 10), 6); // Some more PHPStorm, it replaced $sectionCount = ($artLength / 10) > 6 ? 6 : ($artLength / 10);
-        $arts = $this->articles;
-
-        for ($i = 0; $i < $sectionCount; $i++) {
-            $section = new Section();
-            $section->setSectionTitle($this->createTitle(mt_rand(10, 15)));
-            $section->setSectionSlug($this->slugify->slugify($section->getSectionTitle()));
-            $section->setSectionDetail($this->createText(mt_rand(1,1)));
-
-            $this->sections[] = $section;
-
-            shuffle($arts); // I could copy the array and shuffle that, leaving the original array alone...
-
-            $nbArt = mt_rand(($artLength / 8), ($artLength / 4));
-
-            $randArts = array_slice($arts, 0, $nbArt);
-            foreach ($randArts as $art) {
-                $section->addArticle($art);
-            }
-
-            $manager->persist($section);
-        }
-
-
-// Now, create the articles
-        for ($i = 0; $i < 160; $i++) {
-            $article = new Article();
-            $randUser = array_rand($this->admins);
-            $article->setUser($this->admins[$randUser]);
-            $article->setTitle($this->createTitle(mt_rand(10,40)));
-            $article->setTitleSlug($this->slugify->slugify($article->getTitle()));
-            $article->setText($this->createText(mt_rand(4,10)));
-            $date = $this->faker->dateTimeThisYear();
-            $article->setArticleDateCreated($date);
-            $isPub = mt_rand(0, 4);
-            $article->setPublished($isPub);
-            if ($isPub) {
-                $datePub = $this->createPubDate($date);
-                $article->setArticleDatePosted($datePub);
-            }
-
-            $this->articles[] = $article;
-            $manager->persist($article);
-        }
-        $artLength = count($this->articles); // decided to adjust the amount of sections, tags, etc dynamically by the amount of articles
-
-
-        $manager->flush();
-
-        $sectionCount = min(($artLength / 10), 6); // Some more PHPStorm, it replaced $sectionCount = ($artLength / 10) > 6 ? 6 : ($artLength / 10);
+        $sectionCount = 6; // min(($artLength / 10), 6); // Some more PHPStorm, it replaced $sectionCount = ($artLength / 10) > 6 ? 6 : ($artLength / 10);
         $arts = $this->articles;
 
         for ($i = 0; $i < $sectionCount; $i++) {
